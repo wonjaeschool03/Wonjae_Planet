@@ -1,0 +1,127 @@
+
+/* This just forces full height and width of the 
+html and body elements, since we'll only have 
+one element in the center */
+html, body {
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+    background-color: rgb(5, 5, 5);
+    overflow: hidden; /*prevents any unwanted scrollbars */
+}
+
+
+/* I use a lot of absolute positioning to take the elements out of their normal stacking 
+document flow and just place them exactly where I want them (for many elements, inside their parent container) */
+
+
+/* Parent container for the planet, halo, sun, and ship */
+#planetParent {
+    position:absolute;
+    height:fit-content;
+    width:fit-content;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    animation: rotate 10s linear infinite; /* slow rotation of the parent container */
+    transition: transform 0.3s ease; /* smooth transition for any transform changes */
+}
+
+
+/* Keyframes for rotating the parent container (and all children inside it) */
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+/* The planet itself */
+/* I made the planet's gradient background slightly transparent, so you can see the sun moving */
+#planet {
+    position:absolute;
+    height:200px;
+    width:200px;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(17, 94, 226, .75) 0%, rgb(8, 8, 54) 70%);
+    z-index:1;
+}
+
+
+/* Halo around the planet */
+#halo {   
+    position:absolute;
+    height:200px;
+    width:200px;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,255,0,0.75) 0%, rgba(255,255,0,0) 50%);
+    transition: transform 2s ease;
+}
+
+
+/* The sun */
+#sun {  
+    position:absolute;
+    height:75px;
+    width:75px;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,255,0,0.8) 40%, rgb(255, 179, 0) 100%);
+    transition: transform 2s ease;
+}
+
+
+/* The ASCII text ship element */
+.text {
+    position: absolute;
+    top: 60px;
+    left: 40px;
+    color: #ccc;
+    font-size: 14px;
+    font-family:'Courier New', Courier, monospace;
+    text-align: center;
+    transform: rotate(140deg);
+    z-index:2;
+    transition: color .5s ease;
+}
+
+
+/* The chemtrail and ship text elements */
+.chemtrailText {
+    color: orange; /* makes the chemtrail text orange */
+    transition: color .5s ease;
+}
+.shipText {
+    color:white;
+    transition: color .5s ease;
+}
+
+
+/* This allows me to affect a child element (#sun) on hover of the parent element (#planetParent) */
+/* NOTE: There are different ways to affect a an element that is separate from the one that is hovered */
+#planetParent:hover #sun { 
+    transform: translate(50%, 50%) scale(1.5);
+}
+
+#planetParent:hover #halo { 
+    transform: translate(-50%,-50%) scale(2);
+}
+
+
+/* Hover effects for the parent container affecting multiple child elements, separated by commas */
+/* This changes the color of the text elements when the parent container is hovered */
+#planetParent:hover .text, #planetParent:hover .chemtrailText, #planetParent:hover .shipText { 
+    color: black;
+}
